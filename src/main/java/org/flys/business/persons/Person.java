@@ -22,11 +22,11 @@ public abstract class Person implements Identifier {
     }
 
     public Person(){
-        this.name = "";
-        this.surname = "";
-        this.age = 0;
-        this.email = "";
-        this.phoneNumber = "";
+        this.name = "Jonh";
+        this.surname = "Doe";
+        this.age = 18;
+        this.email = "reserva@u.com";
+        this.phoneNumber = "999";
     }
 
     @Override
