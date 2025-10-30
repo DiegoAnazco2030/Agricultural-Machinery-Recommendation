@@ -1,4 +1,4 @@
-package org.flys.business.fly;
+package org.flys.business;
 
 public class Fly  {
 

@@ -1,12 +1,11 @@
 package org.flys.business.fly;
 
 import org.flys.business.Identifier;
-import org.flys.business.SeatType;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class Seat implements Identifier {
+public abstract class Seat implements Identifier {
     protected final UUID idSeat= UUID.randomUUID();
     protected boolean useStage;
     protected SeatType seatType;

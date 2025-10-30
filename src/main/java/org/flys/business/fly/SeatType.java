@@ -1,4 +1,4 @@
-package org.flys.business;
+package org.flys.business.fly;
 
 public enum SeatType {
     FIRST_CLASS,
