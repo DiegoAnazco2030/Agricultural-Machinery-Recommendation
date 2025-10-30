@@ -7,21 +7,21 @@ import java.util.UUID;
 
 public abstract class Seat implements Identifier {
     protected final UUID idSeat= UUID.randomUUID();
-    protected boolean useStage;
+    protected boolean useState;
     protected SeatType seatType;
 
-    public Seat(boolean useStage, SeatType seatType) {
-        this.useStage = true;
+    public Seat(boolean useState, SeatType seatType) {
+        this.useState = true;
         this.seatType= Objects.requireNonNull(seatType);
 
     }
 
     public boolean isUseStage() {
-        return useStage;
+        return useState;
     }
 
     public void setUseStage(boolean useStage) {
-        this.useStage = useStage;
+        this.useState = useStage;
     }
 
     @Override
