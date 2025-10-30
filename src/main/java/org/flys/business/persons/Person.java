@@ -21,6 +21,19 @@ public abstract class Person implements Identifier {
         this.phoneNumber = phoneNumber;
     }
 
+    public Person(){
+        this.name = "";
+        this.surname = "";
+        this.age = 0;
+        this.email = "";
+        this.phoneNumber = "";
+    }
+
+    @Override
+    public UUID getId() {
+        return getPersonID();
+    }
+
     public UUID getPersonID() {
         return personID;
     }

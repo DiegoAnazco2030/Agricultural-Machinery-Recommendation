@@ -1,7 +1,7 @@
 package org.flys.business;
 
-public class Fly  {
 
+public class Fligth {
 
     
 }
