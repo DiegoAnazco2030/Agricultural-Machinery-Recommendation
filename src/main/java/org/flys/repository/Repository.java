@@ -11,6 +11,7 @@ public interface Repository<T extends Identifier> {
     // Method to save one entity T
     T save(T entity);
 
+    T update(T entity);
     // Method to find one entity for you ID.
     Optional<T> findById(UUID id);
 

@@ -1,77 +1,121 @@
 package org.flys.services;
 
-import org.flys.business.Fligth;
+import org.flys.business.Flight;
+import org.flys.business.fly.Countries;
+import org.flys.business.fly.Destination;
+import org.flys.business.fly.Plane;
 import org.flys.repository.Repository;
 import org.flys.services.DTOs.FlyCreateDTO;
 import org.flys.services.DTOs.FlyUpdateDTO;
 import org.flys.services.DTOs.FlyResponseDTO;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
+public class FlysServices implements FlightMethods {
 
-public class FlysServices {
+    private final Repository<Flight> flightRepository;
+    private final Repository<Plane> planeRepository;
 
-    private final Repository repository;
-
-    public FlysServices(Repository repository) {
-        this.repository = repository;
+    public FlysServices(Repository<Flight> flightRepository, Repository<Plane> planeRepository) {
+        this.flightRepository = flightRepository;
+        this.planeRepository = planeRepository;
     }
 
-    // Crear vuelo
+    @Override
     public FlyResponseDTO createFly(FlyCreateDTO dto) {
-        // validaciones básicas
         if (dto.origin == null || dto.origin.isBlank()) throw new IllegalArgumentException("origin required");
         if (dto.destination == null || dto.destination.isBlank()) throw new IllegalArgumentException("destination required");
-        // mapear DTO -> entidad (ajusta constructor/propiedades de Fly)
-        Fligth fly = new Fligth(/* pasar campos adecuados, ej: dto.origin, dto.destination, dto.departure, dto.planeId */);
-        // persistir: ajustar el método save según tu Repository
-        repository.save(fly); // TODO: verificar firma real
-        return mapToDTO(fly);
+
+        try {
+            Countries departureCountry = Countries.valueOf(dto.origin.toUpperCase());
+            Countries arrivalCountry = Countries.valueOf(dto.destination.toUpperCase());
+            Destination flightDest = new Destination(departureCountry, arrivalCountry);
+
+            UUID planeUUID = UUID.fromString(dto.planeId);
+            Plane plane = planeRepository.findById(planeUUID)
+                    .orElseThrow(() -> new IllegalArgumentException("Plane with ID " + dto.planeId + " not found."));
+
+            Flight newFlight = new Flight(flightDest, plane, dto.departure);
+
+            Flight savedFlight = flightRepository.save(newFlight);
+            return mapToDTO(savedFlight);
+
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid data: " + e.getMessage(), e);
+        }
     }
 
-    // Obtener por id
+    @Override
     public Optional<FlyResponseDTO> getFly(String id) {
-        // ajustar findById según Repository
-        Optional<Fligth> maybe = repository.findById(id); // TODO: adaptar
-        return maybe.map(this::mapToDTO);
+        try {
+            UUID uuid = UUID.fromString(id);
+            Optional<Flight> maybe = flightRepository.findById(uuid);
+            return maybe.map(this::mapToDTO);
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
-    // Listar todos
+    @Override
     public List<FlyResponseDTO> listFlys() {
-        List<Fligth> all = repository.findAll(); // TODO: adaptar
+        List<Flight> all = flightRepository.findAll();
         return all.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
-    // Actualizar
+    @Override
     public Optional<FlyResponseDTO> updateFly(String id, FlyUpdateDTO dto) {
-        Optional<Fligth> maybe = repository.findById(id); // TODO: adaptar
-        if (maybe.isEmpty()) return Optional.empty();
-        Fligth fly = maybe.get();
-        // aplicar cambios (ajusta setters o usa builder/inmutabilidad)
-        if (dto.origin != null && !dto.origin.isBlank()) fly.setOrigin(dto.origin);
-        if (dto.destination != null && !dto.destination.isBlank()) fly.setDestination(dto.destination);
-        if (dto.departure != null) fly.setDeparture(dto.departure);
-        repository.update(fly); // TODO: adaptar
-        return Optional.of(mapToDTO(fly));
+        try {
+            UUID uuid = UUID.fromString(id);
+            Optional<Flight> maybe = flightRepository.findById(uuid);
+            if (maybe.isEmpty()) return Optional.empty();
+
+            Flight fly = maybe.get();
+
+            if (dto.origin != null && !dto.origin.isBlank()){
+                Countries newDeparture = Countries.valueOf(dto.origin.toUpperCase());
+                fly.getFlightDestination().setDeparture(newDeparture);
+            }
+            if (dto.destination != null && !dto.destination.isBlank()){
+                Countries newArrival = Countries.valueOf(dto.destination.toUpperCase());
+                fly.getFlightDestination().setArrival(newArrival);
+            }
+            if (dto.departure != null) {
+                fly.setDepartureDateTime(dto.departure);
+            }
+
+            Flight updatedFly = flightRepository.save(fly);
+
+            return Optional.of(mapToDTO(updatedFly));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
-    // Eliminar
+    @Override
     public boolean deleteFly(String id) {
-        // puedes usar Borrar DTO si prefieres
-        boolean existed = repository.deleteById(id); // TODO: adaptar
-        return existed;
+        try {
+            UUID uuid = UUID.fromString(id);
+            boolean existed = flightRepository.findById(uuid).isPresent();
+            if (existed) {
+                flightRepository.deleteById(uuid);
+                return true;
+            }
+            return false;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
-    // Mapeo entidad -> DTO (ajusta según Fly)
-    private FlyResponseDTO mapToDTO(Fligth fly) {
+    private FlyResponseDTO mapToDTO(Flight fly) {
         return new FlyResponseDTO(
-            fly.getId().toString(), // adaptar si id es Identifier
-            fly.getOrigin(),
-            fly.getDestination(),
-            fly.getDeparture(),
-            fly.getPlaneId()
+                fly.getId().toString(),
+                fly.getFlightDestination().getDeparture().name(),
+                fly.getFlightDestination().getArrival().name(),
+                fly.getDepartureDateTime(),
+                fly.getFlightPlane().getId().toString()
         );
     }
 }

@@ -5,15 +5,19 @@ import org.flys.business.Identifier;
 import java.util.Objects;
 import java.util.UUID;
 
-public abstract class Seat implements Identifier {
+public class Seat implements Identifier {
     protected final UUID idSeat= UUID.randomUUID();
     protected boolean useState;
     protected SeatType seatType;
 
     public Seat(boolean useState, SeatType seatType) {
-        this.useState = true;
+        this.useState = useState;
         this.seatType= Objects.requireNonNull(seatType);
+    }
 
+    public Seat(SeatType seatType) {
+        this.useState = false;
+        this.seatType= Objects.requireNonNull(seatType);
     }
 
     public boolean isUseStage() {
