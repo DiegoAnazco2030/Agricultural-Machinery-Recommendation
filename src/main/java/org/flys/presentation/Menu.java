@@ -1,27 +1,39 @@
 package org.flys.presentation;
 
 public class Menu {
+    // Menu principal
+    public static void mainMenu() {
+        System.out.println("-------------------Main Menu-------------------");
+        System.out.println("1.- Flight Management");
+        System.out.println("2.- Reservation Management");
+        System.out.println("3.- Passenger Management");
+        System.out.println("4.- Exit");
+    }
+
+    // Menu de gestión de vuelos
     public static void flightManagementMenu() {
-        System.out.println("----------------Gestion de vuelos----------------");
+        System.out.println("----------------Flight Management----------------");
         System.out.println("1.- Register new flight");
-        System.out.println("2.- Modificar vuelo existente");
-        System.out.println("3.- Eliminar vuelo");
-        System.out.println("4.- Consultar vuelos");
+        System.out.println("2.- Modify existing flight");
+        System.out.println("3.- Delete flight");
+        System.out.println("4.- View flights");
     }
 
+    // Menu de gestión de reservas
     public static void reservationManagementMenu() {
-        System.out.println("---------------Gestion de reservas---------------");
-        System.out.println("1.- Crear nueva reserva");
-        System.out.println("2.- Modificar reserva");
-        System.out.println("3.- Cancelar reserva");
-        System.out.println("4.- Consultar reservas");
+        System.out.println("--------------Reservation Management-------------");
+        System.out.println("1.- Create new reservation");
+        System.out.println("2.- Modify reservation");
+        System.out.println("3.- Cancel reservation");
+        System.out.println("4.- View reservations");
     }
 
+    // Menu de gestión de pasajeros
     public static void passengerManagementMenu() {
-        System.out.println("---------------Gestion de pasajeros---------------");
-        System.out.println("1.- Registrar nuevo pasajero");
-        System.out.println("2-. Modificar datos del pasajero");
-        System.out.println("3.- Eliminar pasajero");
-        System.out.println("4.- Consultar pasajeros");
+        System.out.println("---------------Passenger Management---------------");
+        System.out.println("1.- Register new passenger");
+        System.out.println("2.- Modify passenger data");
+        System.out.println("3.- Delete passenger");
+        System.out.println("4.- View passengers");
     }
 }

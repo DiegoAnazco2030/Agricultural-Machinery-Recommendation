@@ -4,10 +4,11 @@ import org.flys.business.Identifier;
 
 import java.util.*;
 
-
-// This class implements the Repository interface, providing in-memory storage for entities of type T (which extends Identifiable).
+/*
+This class implements the Repository interface, providing in-memory storage for entities
+of type T (which extends Identifiable).
+*/
 public class InMemoryRepository<T extends Identifier> implements Repository<T> {
-
     // In-memory storage using a HashMap, where the key is the entity's UUID and the value is the entity itself.
     private final Map<UUID, T> storage = new HashMap<>();
 
@@ -16,6 +17,18 @@ public class InMemoryRepository<T extends Identifier> implements Repository<T> {
     public T save(T entity) {
         storage.put(entity.getId(), entity);  // Store the entity in the map
         return entity;  // Return the saved entity
+    }
+
+    // Update an entity in the in-memory storage. Currently not implemented, returns null.
+    @Override
+    public T update(T entity) {
+        if (storage.containsKey(entity.getId())) {  // Check if the entity exists
+            storage.put(entity.getId(), entity);  // Store the entity in the map
+            return entity;  // Return the saved entity
+        } else {
+            // Throw exception if entity does not exist
+            throw new NoSuchElementException("Entity not found: " + entity.getId());
+        }
     }
 
     // Find an entity by its UUID (ID). Returns an Optional to handle cases where the entity might not exist.

@@ -6,21 +6,29 @@ import java.util.HashSet;
 import java.util.UUID;
 
 public class Plane implements Identifier {
-    protected final UUID idPlane= UUID.randomUUID();;
-    protected AircraftModel model;
-    protected int cantSeats;
-    protected HashSet<Seat> flightSeats = new HashSet<>();
+    private final UUID idPlane= UUID.randomUUID();
+    private HashSet<Seat> flightSeats = new HashSet<>();
+    private AircraftModel model;
+    private int cantSeats;
 
-    public Plane(AircraftModel model, int cantSeats, HashSet<Seat> flightSeats) {
+    public Plane(AircraftModel model, int cantSeats) {
         this.model = model;
         this.cantSeats = cantSeats;
-        this.flightSeats = flightSeats;
+    }
+
+    // Retorna el Set de asientos del avión
+    public HashSet<Seat> getFlightSeats() {
+        return flightSeats;
+    }
+    // Añade un asiento al Set de asientos del avión
+    public void setFlightSeats(Seat flightSeats) {
+        this.flightSeats.add(flightSeats);
     }
 
     public int getNumSeats(){
         return switch (this.model) {
-            case AIRBUS_A320 -> 150;
             case BOEING_737 -> 160;
+            case AIRBUS_A320 -> 150;
             case BOEING_787 -> 100;
             case AIRBUS_A350 -> 70;
         };

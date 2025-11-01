@@ -6,18 +6,18 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Seat implements Identifier {
-    protected final UUID idSeat= UUID.randomUUID();
-    protected boolean useState;
-    protected SeatType seatType;
+    private final UUID idSeat = UUID.randomUUID();
+    private boolean useState;
+    private SeatType seatType;
 
     public Seat(boolean useState, SeatType seatType) {
         this.useState = useState;
-        this.seatType= Objects.requireNonNull(seatType);
+        this.seatType= Objects.requireNonNull(seatType, "seatType es obligatorio");
     }
 
     public Seat(SeatType seatType) {
         this.useState = false;
-        this.seatType= Objects.requireNonNull(seatType);
+        this.seatType= Objects.requireNonNull(seatType, "seatType es obligatorio");
     }
 
     public boolean isUseStage() {
@@ -26,6 +26,14 @@ public class Seat implements Identifier {
 
     public void setUseStage(boolean useStage) {
         this.useState = useStage;
+    }
+
+    public SeatType getSeatType() {
+        return seatType;
+    }
+
+    public void setSeatType(SeatType seatType) {
+        this.seatType = seatType;
     }
 
     @Override

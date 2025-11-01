@@ -1,15 +1,9 @@
 package org.flys.services.DTOs;
 
-import java.time.LocalDateTime;
-
-public class FlyUpdateDTO {
-    public final String origin;
-    public final String destination;
-    public final LocalDateTime departure;
-
-    public FlyUpdateDTO(String origin, String destination, LocalDateTime departure) {
-        this.origin = origin;
-        this.destination = destination;
-        this.departure = departure;
-    }
+/**
+ * String departureDateTime debe tener el siguiente formato:
+ * "yyyy-MM-dd HH:mm"
+ */
+public record FlyUpdateDTO(String id, String origin, String destination, String departureDateTime) {
+    // Constructor de 4 argumentos
 }

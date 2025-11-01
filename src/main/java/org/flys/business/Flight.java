@@ -1,6 +1,5 @@
 package org.flys.business;
 
-
 import org.flys.business.fly.*;
 import org.flys.business.persons.Employee;
 
@@ -9,18 +8,17 @@ import java.util.HashSet;
 import java.util.UUID;
 
 public class Flight implements Identifier {
-    private final UUID idFlight= UUID.randomUUID();
-    private HashSet<Booking> bookings = new HashSet<>();
+    private final UUID idFlight = UUID.randomUUID();
+    private final HashSet<Booking> bookings = new HashSet<>();
+    private final HashSet<Employee> flightCrew = new HashSet<>();
     private Plane flightPlane;
     private Destination flightDestination;
-    private HashSet<Employee> flightCrew = new HashSet<>();
-
     private LocalDateTime departureDateTime;
-    public Flight(HashSet<Booking> bookings, HashSet<Employee> flightCrew, Destination flightDestination, Plane flightPlane, HashSet<Seat> flightSeats) {
-        this.bookings = bookings;
-        this.flightCrew = flightCrew;
+
+    public Flight(Destination flightDestination, Plane flightPlane, LocalDateTime departureDateTime) {
         this.flightDestination = flightDestination;
         this.flightPlane = flightPlane;
+        this.departureDateTime = departureDateTime;
     }
 
     @Override
@@ -28,20 +26,22 @@ public class Flight implements Identifier {
         return idFlight;
     }
 
+    // Retorna el Set de reservas del vuelo
     public HashSet<Booking> getBookings() {
         return bookings;
     }
-
-    public void setBookings(HashSet<Booking> bookings) {
-        this.bookings = bookings;
+    // Añade una reserva al Set de reservas del vuelo
+    public void setBookings(Booking booking) {
+        this.bookings.add(booking);
     }
 
+    // Retorna el Set de emplados del vuelo
     public HashSet<Employee> getFlightCrew() {
         return flightCrew;
     }
-
-    public void setFlightCrew(HashSet<Employee> flightCrew) {
-        this.flightCrew = flightCrew;
+    // Añade un empleado al Set de empleados del vuelo
+    public void setFlightCrew(Employee flightCrew) {
+        this.flightCrew.add(flightCrew);
     }
 
     public Destination getFlightDestination() {
@@ -58,6 +58,14 @@ public class Flight implements Identifier {
 
     public void setFlightPlane(Plane flightPlane) {
         this.flightPlane = flightPlane;
+    }
+
+    public LocalDateTime getDepartureDateTime() {
+        return departureDateTime;
+    }
+
+    public void setDepartureDateTime(LocalDateTime departureDateTime) {
+        this.departureDateTime = departureDateTime;
     }
 
     public UUID getIdFlight() {

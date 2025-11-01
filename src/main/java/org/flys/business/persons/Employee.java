@@ -1,11 +1,10 @@
 package org.flys.business.persons;
 
 public class Employee extends Person {
+    private EmployeeType employeeType;
 
-    protected EmployeeType employeeType;
-
-    public Employee(String name, String surname, int age, String email, String phoneNumber, EmployeeType employeeType) {
-        super(name, surname, age, email, phoneNumber);
+    public Employee(String name, String surname, String email, String phoneNumber, int age, EmployeeType employeeType) {
+        super(name, surname, email, phoneNumber, age);
         this.employeeType = employeeType;
     }
 

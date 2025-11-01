@@ -5,13 +5,14 @@ import org.flys.business.Identifier;
 import java.util.*;
 import java.util.function.Predicate;
 
-
 public interface Repository<T extends Identifier> {
 
     // Method to save one entity T
     T save(T entity);
 
+    // Method to update one entity T
     T update(T entity);
+    
     // Method to find one entity for you ID.
     Optional<T> findById(UUID id);
 
@@ -28,7 +29,6 @@ public interface Repository<T extends Identifier> {
 
         // We iterate over all the retrieved entities with findAll()
         for (T t : findAll()) {
-
             if (filter.test(t)) out.add(t);
         }
 

@@ -15,7 +15,7 @@ public interface FlightMethods {
 
     List<FlyResponseDTO> listFlys();
 
-    Optional<FlyResponseDTO> updateFly(String id, FlyUpdateDTO dto);
+    Optional<FlyResponseDTO> updateFly(FlyUpdateDTO dto);
 
     boolean deleteFly(String id);
 }

@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class FlysServices implements FlightMethods {
-
     private final Repository<Flight> flightRepository;
     private final Repository<Plane> planeRepository;
 
@@ -26,20 +27,24 @@ public class FlysServices implements FlightMethods {
 
     @Override
     public FlyResponseDTO createFly(FlyCreateDTO dto) {
-        if (dto.origin == null || dto.origin.isBlank()) throw new IllegalArgumentException("origin required");
-        if (dto.destination == null || dto.destination.isBlank()) throw new IllegalArgumentException("destination required");
+        if (dto.origin() == null || dto.origin().isBlank())
+            throw new IllegalArgumentException("origin required");
+        if (dto.destination() == null || dto.destination().isBlank())
+            throw new IllegalArgumentException("destination required");
+        if (dto.departureDateTime() == null || dto.departureDateTime().isBlank())
+            throw new IllegalArgumentException("departureDateTime required");
 
         try {
-            Countries departureCountry = Countries.valueOf(dto.origin.toUpperCase());
-            Countries arrivalCountry = Countries.valueOf(dto.destination.toUpperCase());
+            Countries departureCountry = Countries.valueOf(dto.origin().toUpperCase());
+            Countries arrivalCountry = Countries.valueOf(dto.destination().toUpperCase());
             Destination flightDest = new Destination(departureCountry, arrivalCountry);
-
-            UUID planeUUID = UUID.fromString(dto.planeId);
+            UUID planeUUID = UUID.fromString(dto.planeId());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime departureDateTime = LocalDateTime.parse(dto.departureDateTime(), formatter);
             Plane plane = planeRepository.findById(planeUUID)
-                    .orElseThrow(() -> new IllegalArgumentException("Plane with ID " + dto.planeId + " not found."));
+                    .orElseThrow(() -> new IllegalArgumentException("Plane with ID " + dto.planeId() + " not found."));
 
-            Flight newFlight = new Flight(flightDest, plane, dto.departure);
-
+            Flight newFlight = new Flight(flightDest, plane, departureDateTime);
             Flight savedFlight = flightRepository.save(newFlight);
             return mapToDTO(savedFlight);
 
@@ -54,6 +59,7 @@ public class FlysServices implements FlightMethods {
             UUID uuid = UUID.fromString(id);
             Optional<Flight> maybe = flightRepository.findById(uuid);
             return maybe.map(this::mapToDTO);
+
         } catch (IllegalArgumentException e) {
             return Optional.empty();
         }
@@ -61,34 +67,37 @@ public class FlysServices implements FlightMethods {
 
     @Override
     public List<FlyResponseDTO> listFlys() {
-        List<Flight> all = flightRepository.findAll();
-        return all.stream().map(this::mapToDTO).collect(Collectors.toList());
+        return flightRepository.findAll().stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<FlyResponseDTO> updateFly(String id, FlyUpdateDTO dto) {
+    public Optional<FlyResponseDTO> updateFly(FlyUpdateDTO dto) {
         try {
-            UUID uuid = UUID.fromString(id);
+            UUID uuid = UUID.fromString(dto.id());
             Optional<Flight> maybe = flightRepository.findById(uuid);
             if (maybe.isEmpty()) return Optional.empty();
 
             Flight fly = maybe.get();
 
-            if (dto.origin != null && !dto.origin.isBlank()){
-                Countries newDeparture = Countries.valueOf(dto.origin.toUpperCase());
+            if (dto.origin() != null && !dto.origin().isBlank()){
+                Countries newDeparture = Countries.valueOf(dto.origin().toUpperCase());
                 fly.getFlightDestination().setDeparture(newDeparture);
             }
-            if (dto.destination != null && !dto.destination.isBlank()){
-                Countries newArrival = Countries.valueOf(dto.destination.toUpperCase());
+            if (dto.destination() != null && !dto.destination().isBlank()){
+                Countries newArrival = Countries.valueOf(dto.destination().toUpperCase());
                 fly.getFlightDestination().setArrival(newArrival);
             }
-            if (dto.departure != null) {
-                fly.setDepartureDateTime(dto.departure);
+            if (dto.departureDateTime() != null && !dto.departureDateTime().isBlank()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime departureDateTime = LocalDateTime.parse(dto.departureDateTime(), formatter);
+                fly.setDepartureDateTime(departureDateTime);
             }
 
             Flight updatedFly = flightRepository.save(fly);
-
             return Optional.of(mapToDTO(updatedFly));
+
         } catch (IllegalArgumentException e) {
             return Optional.empty();
         }
@@ -110,11 +119,12 @@ public class FlysServices implements FlightMethods {
     }
 
     private FlyResponseDTO mapToDTO(Flight fly) {
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return new FlyResponseDTO(
                 fly.getId().toString(),
                 fly.getFlightDestination().getDeparture().name(),
                 fly.getFlightDestination().getArrival().name(),
-                fly.getDepartureDateTime(),
+                fly.getDepartureDateTime().format(formatter),
                 fly.getFlightPlane().getId().toString()
         );
     }
