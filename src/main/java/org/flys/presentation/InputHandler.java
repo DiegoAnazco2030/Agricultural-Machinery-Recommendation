@@ -5,28 +5,28 @@ import org.flys.services.DTOs.*;
 public class InputHandler {
     public static FlyCreateDTO getFlyCreateDTO() {
         System.out.println("Ingrese los detalles del vuelo:");
-
+        MenuObjects.getString();
         String origin = MenuObjects.getString("Ingrese el origen: ");
         String destination = MenuObjects.getString("Ingrese el destino: ");
         String planeId = MenuObjects.getString("Ingrese el ID del avión: ");
-        String departureDateTime = MenuObjects.getString("Ingrese la fecha y hora de salida (yyyy-MM-dd HH:mm): ");
 
-        return new FlyCreateDTO(origin, destination, planeId, departureDateTime);
+
+        return new FlyCreateDTO(origin, destination, planeId);
     }
 
     public static FlyUpdateDTO getFlyUpdateDTO() {
         System.out.println("Ingrese los detalles actualizados del vuelo:");
-
+        MenuObjects.getString();
         String id = MenuObjects.getString("Ingrese el ID del vuelo a modificar: ");
         String origin = MenuObjects.getString("Ingrese el origen: ");
         String destination = MenuObjects.getString("Ingrese el destino: ");
-        String departureDateTime = MenuObjects.getString("Ingrese la fecha y hora de salida (yyyy-MM-dd HH:mm): ");
 
-        return new FlyUpdateDTO(id, origin, destination, departureDateTime);
+        return new FlyUpdateDTO(id, origin, destination);
     }
 
     public static PassengerCreateDTO getPassengerCreateDTO() {
         System.out.println("Ingrese los detalles del nuevo pasajero:");
+        MenuObjects.getString();
         String name = MenuObjects.getString("Nombre:");
         String surname = MenuObjects.getString("Apellido:");
         String email = MenuObjects.getString("Email:");
@@ -39,6 +39,7 @@ public class InputHandler {
 
     public static PassengerUpdateDTO getPassengerUpdateDTO() {
         System.out.println("Ingrese los detalles a modificar del pasajero:");
+        MenuObjects.getString();
         String id = MenuObjects.getString("ID del pasajero a modificar:");
         String name = MenuObjects.getString("Nuevo Nombre (deje en blanco para no cambiar):");
         String surname = MenuObjects.getString("Nuevo Apellido (deje en blanco para no cambiar):");
@@ -59,6 +60,7 @@ public class InputHandler {
 
     public static BookingCreateDTO getBookingCreateDTO() {
         System.out.println("Ingrese los detalles de la nueva reserva:");
+        MenuObjects.getString();
         String passengerId = MenuObjects.getString("ID del Pasajero:");
         String flightId = MenuObjects.getString("ID del Vuelo:");
         return new BookingCreateDTO(passengerId, flightId);

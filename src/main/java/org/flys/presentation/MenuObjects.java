@@ -11,7 +11,7 @@ public class MenuObjects {
         do {
             text = input.nextLine().trim();
             if (text.isEmpty()) {
-                System.out.println("⚠️ El texto no puede estar vacío. Intente nuevamente.");
+                System.out.println("El texto no puede estar vacío. Intente nuevamente.");
             }
         } while (text.isEmpty());
         return text;
@@ -31,7 +31,7 @@ public class MenuObjects {
                 number = Integer.parseInt(input.nextLine());
                 return number;
             } catch (NumberFormatException e) {
-                System.out.println("⚠️ Entrada inválida. Debe ingresar un número entero.");
+                System.out.println("Entrada inválida. Debe ingresar un número entero.");
             }
         }
     }
@@ -43,7 +43,7 @@ public class MenuObjects {
             System.out.printf("Ingrese un número (%d - %d): ", min, max);
             number = getInt();
             if (number < min || number > max) {
-                System.out.println("⚠️ Número fuera de rango. Intente nuevamente.");
+                System.out.println("Número fuera de rango. Intente nuevamente.");
             } else {
                 return number;
             }
@@ -59,7 +59,7 @@ public class MenuObjects {
                 number = Double.parseDouble(input.nextLine());
                 return number;
             } catch (NumberFormatException e) {
-                System.out.println("⚠️ Entrada inválida. Debe ingresar un número decimal.");
+                System.out.println("Entrada inválida. Debe ingresar un número decimal.");
             }
         }
     }

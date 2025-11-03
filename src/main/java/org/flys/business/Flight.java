@@ -3,7 +3,6 @@ package org.flys.business;
 import org.flys.business.fly.*;
 import org.flys.business.persons.Employee;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -13,12 +12,10 @@ public class Flight implements Identifier {
     private final HashSet<Employee> flightCrew = new HashSet<>();
     private Plane flightPlane;
     private Destination flightDestination;
-    private LocalDateTime departureDateTime;
 
-    public Flight(Destination flightDestination, Plane flightPlane, LocalDateTime departureDateTime) {
-        this.flightDestination = flightDestination;
+    public Flight(Plane flightPlane, Destination flightDestination) {
         this.flightPlane = flightPlane;
-        this.departureDateTime = departureDateTime;
+        this.flightDestination = flightDestination;
     }
 
     @Override
@@ -58,14 +55,6 @@ public class Flight implements Identifier {
 
     public void setFlightPlane(Plane flightPlane) {
         this.flightPlane = flightPlane;
-    }
-
-    public LocalDateTime getDepartureDateTime() {
-        return departureDateTime;
-    }
-
-    public void setDepartureDateTime(LocalDateTime departureDateTime) {
-        this.departureDateTime = departureDateTime;
     }
 
     public UUID getIdFlight() {

@@ -31,20 +31,18 @@ public class FlysServices implements FlightMethod {
             throw new IllegalArgumentException("origin required");
         if (dto.destination() == null || dto.destination().isBlank())
             throw new IllegalArgumentException("destination required");
-        if (dto.departureDateTime() == null || dto.departureDateTime().isBlank())
-            throw new IllegalArgumentException("departureDateTime required");
+
 
         try {
             Countries departureCountry = Countries.valueOf(dto.origin().toUpperCase());
             Countries arrivalCountry = Countries.valueOf(dto.destination().toUpperCase());
             Destination flightDest = new Destination(departureCountry, arrivalCountry);
             UUID planeUUID = UUID.fromString(dto.planeId());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            LocalDateTime departureDateTime = LocalDateTime.parse(dto.departureDateTime(), formatter);
+
             Plane plane = planeRepository.findById(planeUUID)
                     .orElseThrow(() -> new IllegalArgumentException("Plane with ID " + dto.planeId() + " not found."));
 
-            Flight newFlight = new Flight(flightDest, plane, departureDateTime);
+            Flight newFlight = new Flight(plane, flightDest);
             Flight savedFlight = flightRepository.save(newFlight);
             return mapToDTO(savedFlight);
 
@@ -89,11 +87,6 @@ public class FlysServices implements FlightMethod {
                 Countries newArrival = Countries.valueOf(dto.destination().toUpperCase());
                 fly.getFlightDestination().setArrival(newArrival);
             }
-            if (dto.departureDateTime() != null && !dto.departureDateTime().isBlank()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime departureDateTime = LocalDateTime.parse(dto.departureDateTime(), formatter);
-                fly.setDepartureDateTime(departureDateTime);
-            }
 
             Flight updatedFly = flightRepository.save(fly);
             return Optional.of(mapToDTO(updatedFly));
@@ -118,13 +111,13 @@ public class FlysServices implements FlightMethod {
         }
     }
 
+
     private FlyResponseDTO mapToDTO(Flight fly) {
-        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        //DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return new FlyResponseDTO(
                 fly.getId().toString(),
                 fly.getFlightDestination().getDeparture().name(),
                 fly.getFlightDestination().getArrival().name(),
-                fly.getDepartureDateTime().format(formatter),
                 fly.getFlightPlane().getId().toString()
         );
     }

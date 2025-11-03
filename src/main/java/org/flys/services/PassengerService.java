@@ -11,17 +11,19 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class PassengerService {
+public class PassengerService implements PassengerMethod{
 
     private final Repository<Passenger> passengerRepository;
 
     // 1. Inyección de Dependencias (¡Buena práctica!)
     // Le pasamos el repositorio que necesita para funcionar.
+
     public PassengerService(Repository<Passenger> passengerRepository) {
         this.passengerRepository = passengerRepository;
     }
 
     // Método para crear un pasajero
+    @Override
     public PassengerResponseDTO createPassenger(PassengerCreateDTO dto) {
         // Aquí irían validaciones (ej. email no nulo, edad > 0)
         if (dto.name() == null || dto.name().isBlank()) {
@@ -45,6 +47,7 @@ public class PassengerService {
     }
 
     // Método para obtener un pasajero por su ID
+    @Override
     public Optional<PassengerResponseDTO> getPassengerById(String id) {
         try {
             UUID uuid = UUID.fromString(id);
@@ -56,6 +59,7 @@ public class PassengerService {
     }
 
     // Método para listar todos los pasajeros
+    @Override
     public List<PassengerResponseDTO> listPassengers() {
         return passengerRepository.findAll()
                 .stream()
@@ -64,6 +68,7 @@ public class PassengerService {
     }
 
     // Método para eliminar un pasajero
+    @Override
     public boolean deletePassenger(String id) {
         try {
             UUID uuid = UUID.fromString(id);
@@ -78,6 +83,7 @@ public class PassengerService {
     }
 
     // Método para actualizar un pasajero
+    @Override
     public Optional<PassengerResponseDTO> updatePassenger(PassengerUpdateDTO dto) {
         try {
             UUID uuid = UUID.fromString(dto.id());

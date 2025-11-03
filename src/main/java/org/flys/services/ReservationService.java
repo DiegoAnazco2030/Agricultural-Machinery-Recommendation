@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class ReservationService {
+public class ReservationService implements ReservationMethod{
 
     // 4. ¡Múltiples Dependencias!
     // Este servicio necesita hablar con 3 repositorios
@@ -29,6 +29,7 @@ public class ReservationService {
         this.flightRepository = flightRepository;
     }
 
+    @Override
     public BookingResponseDTO createBooking(BookingCreateDTO dto) {
         // 1. Encontrar al pasajero
         Passenger passenger = passengerRepository.findById(UUID.fromString(dto.passengerId()))
@@ -54,6 +55,7 @@ public class ReservationService {
         return mapToDTO(savedBooking);
     }
 
+    @Override
     public boolean cancelBooking(String bookingId) {
         try {
             UUID uuid = UUID.fromString(bookingId);
@@ -77,6 +79,7 @@ public class ReservationService {
         }
     }
 
+    @Override
     // Listar todas las reservas (simple)
     public List<BookingResponseDTO> listAllBookings() {
         return bookingRepository.findAll()

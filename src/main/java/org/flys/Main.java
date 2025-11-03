@@ -17,8 +17,6 @@ import org.flys.services.ReservationService;
 
 public class Main {
 
-    // 5. ¡Corrección Importante!
-    // El método main de Java debe tener esta firma exacta para ejecutarse.
     public static void main(String[] args) {
         boolean exit = false;
 
