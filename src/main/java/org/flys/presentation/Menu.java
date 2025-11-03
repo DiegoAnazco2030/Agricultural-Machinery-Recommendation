@@ -17,6 +17,7 @@ public class Menu {
         System.out.println("2.- Modify existing flight");
         System.out.println("3.- Delete flight");
         System.out.println("4.- View flights");
+        System.out.println("5.- Return");
     }
 
     // Menu de gestión de reservas
@@ -26,6 +27,7 @@ public class Menu {
         System.out.println("2.- Modify reservation");
         System.out.println("3.- Cancel reservation");
         System.out.println("4.- View reservations");
+        System.out.println("5.- Return");
     }
 
     // Menu de gestión de pasajeros
@@ -35,5 +37,6 @@ public class Menu {
         System.out.println("2.- Modify passenger data");
         System.out.println("3.- Delete passenger");
         System.out.println("4.- View passengers");
+        System.out.println("5.- Return");
     }
 }

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class FlysServices implements FlightMethods {
+public class FlysServices implements FlightMethod {
     private final Repository<Flight> flightRepository;
     private final Repository<Plane> planeRepository;
 

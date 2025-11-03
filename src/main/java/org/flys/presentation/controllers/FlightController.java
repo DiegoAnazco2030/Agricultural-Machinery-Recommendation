@@ -22,6 +22,8 @@ public class FlightController {
             case 4:
                 viewFlights(service);
                 return null;
+            case 5:
+                return null;
         }
         return null;
     }

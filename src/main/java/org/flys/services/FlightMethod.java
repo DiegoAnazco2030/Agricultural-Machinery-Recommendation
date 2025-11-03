@@ -7,7 +7,7 @@ import org.flys.services.DTOs.FlyResponseDTO;
 import java.util.List;
 import java.util.Optional;
 
-public interface FlightMethods {
+public interface FlightMethod {
 
     FlyResponseDTO createFly(FlyCreateDTO dto);
 

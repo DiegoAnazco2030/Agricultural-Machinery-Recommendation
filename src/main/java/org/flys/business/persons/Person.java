@@ -1,7 +1,6 @@
 package org.flys.business.persons;
 
 import org.flys.business.Identifier;
-
 import java.util.UUID;
 
 public abstract class Person implements Identifier {

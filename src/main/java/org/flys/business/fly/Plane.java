@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Plane implements Identifier {
     private final UUID idPlane= UUID.randomUUID();
-    private HashSet<Seat> flightSeats = new HashSet<>();
+    private final HashSet<Seat> flightSeats = new HashSet<>();
     private AircraftModel model;
     private int cantSeats;
 
