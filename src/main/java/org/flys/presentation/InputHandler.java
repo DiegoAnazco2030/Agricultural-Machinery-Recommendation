@@ -10,7 +10,6 @@ public class InputHandler {
         String destination = MenuObjects.getString("Ingrese el destino: ");
         String planeId = MenuObjects.getString("Ingrese el ID del avión: ");
 
-
         return new FlyCreateDTO(origin, destination, planeId);
     }
 

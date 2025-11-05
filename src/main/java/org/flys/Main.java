@@ -76,8 +76,7 @@ public class Main {
             // System.out.flush();
 
             if (!exit) {
-                System.out.println("\n--- Presione Enter para continuar ---");
-                MenuObjects.getString(); // Espera que el usuario presione Enter
+                MenuObjects.getEnter(); // Espera que el usuario presione Enter
             }
 
         } while (!exit);

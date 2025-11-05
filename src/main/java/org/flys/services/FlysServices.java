@@ -32,7 +32,6 @@ public class FlysServices implements FlightMethod {
         if (dto.destination() == null || dto.destination().isBlank())
             throw new IllegalArgumentException("destination required");
 
-
         try {
             Countries departureCountry = Countries.valueOf(dto.origin().toUpperCase());
             Countries arrivalCountry = Countries.valueOf(dto.destination().toUpperCase());

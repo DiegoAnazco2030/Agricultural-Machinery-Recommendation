@@ -30,11 +30,10 @@ public class FlightController {
 
     private void viewFlights(FlysServices service) {
         for (FlyResponseDTO dto : service.listFlys()) {
-            System.out.printf("%s | From: %s | To: %s | Departure: %s | Plane ID: %s\n",
+            System.out.printf("%s | From: %s | To: %s | Plane ID: %s\n",
                     dto.id(),
                     dto.origin(),
                     dto.destination(),
-                    dto.departureDateTime(),
                     dto.planeId());
         }
     }

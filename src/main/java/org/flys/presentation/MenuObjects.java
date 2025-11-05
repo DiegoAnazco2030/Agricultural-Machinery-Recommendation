@@ -5,6 +5,11 @@ import java.util.Scanner;
 public class MenuObjects {
     private static final Scanner input = new Scanner(System.in); // solo una instancia
 
+    public static String getEnter() {
+        System.out.println("--- Presione Enter para continuar ---");
+        return input.nextLine();
+    }
+
     // Leer un String válido (no vacío)
     public static String getString() {
         String text;

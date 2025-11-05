@@ -4,9 +4,9 @@ public class Destination {
     private Countries Departure ;
     private Countries Arrival;
 
-    public Destination(Countries arrival, Countries departure) {
-        Arrival = arrival;
+    public Destination(Countries departure, Countries arrival) {
         Departure = departure;
+        Arrival = arrival;
     }
 
     public Countries getArrival() {
