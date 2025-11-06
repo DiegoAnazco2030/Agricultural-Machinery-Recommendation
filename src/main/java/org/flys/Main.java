@@ -50,8 +50,6 @@ public class Main {
         planeRepo.save(plane3);
         planeRepo.save(plane4);
         System.out.println("¡Bienvenido al Sistema de Vuelos!");
-        System.out.println("Avión de prueba (Airbus A320) creado con ID: " + plane1.getId().toString());
-
 
         do {
             Menu.mainMenu();

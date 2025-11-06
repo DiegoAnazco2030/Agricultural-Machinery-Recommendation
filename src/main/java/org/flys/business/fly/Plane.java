@@ -14,6 +14,14 @@ public class Plane implements Identifier {
     public Plane(AircraftModel model, int cantSeats) {
         this.model = model;
         this.cantSeats = cantSeats;
+        for (int i = 0; i < getNumSeats(); i++) {
+            if (i < getNumSeats() * 0.1) {
+                flightSeats.add(new Seat(false, SeatType.FIRST_CLASS));
+            } else if (i < getNumSeats() * 0.3) {
+                flightSeats.add(new Seat(false, SeatType.BUSINESS_CLASS));
+            } else
+            flightSeats.add(new Seat(false, SeatType.ECONOMY_CLASS));
+        }
     }
 
     // Retorna el Set de asientos del avión

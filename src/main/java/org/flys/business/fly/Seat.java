@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Seat implements Identifier {
     private final UUID idSeat = UUID.randomUUID();
-    private boolean useState;
+    private boolean useState; //false (no ocupado) - true (ocupado)
     private SeatType seatType;
 
     public Seat(boolean useState, SeatType seatType) {

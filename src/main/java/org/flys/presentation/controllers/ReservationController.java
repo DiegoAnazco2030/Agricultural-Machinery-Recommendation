@@ -22,6 +22,7 @@ public class ReservationController {
                         createReservation(service);
                         break;
                     case 2: // Modificar (Pendiente)
+                        //hacer ahortia
                         System.out.println("ℹModificar reservas aún no está implementado.");
                         break;
                     case 3: // Cancelar
@@ -66,6 +67,10 @@ public class ReservationController {
                     dto.flightInfo()
             );
         }
+    }
+
+    private void modificateReservation(ReservationService service) {
+
     }
 
     private void cancelReservation(ReservationService service) {

@@ -98,8 +98,8 @@ public class ReservationService implements ReservationMethod{
 
         String flightInfo = "Vuelo no asignado";
         if(flight.isPresent()) {
-            flightInfo = String.format("Vuelo %s (%s -> %s)",
-                    flight.get().getId().toString().substring(0, 8),
+            flightInfo = String.format("%s (%s -> %s)",
+                    flight.get().getId().toString(),
                     flight.get().getFlightDestination().getDeparture(),
                     flight.get().getFlightDestination().getArrival()
             );
