@@ -15,10 +15,10 @@ public class MenuObjects {
         String text;
         do {
             text = input.nextLine().trim();
-            if (text.isEmpty()) {
+            if (text.isBlank()) {
                 System.out.println("El texto no puede estar vacío. Intente nuevamente.");
             }
-        } while (text.isEmpty());
+        } while (text.isBlank());
         return text;
     }
 

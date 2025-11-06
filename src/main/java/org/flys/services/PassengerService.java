@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class PassengerService implements PassengerMethod{
+public class PassengerService implements PassengerMethod {
 
     private final Repository<Passenger> passengerRepository;
 
@@ -96,12 +96,8 @@ public class PassengerService implements PassengerMethod{
             Passenger passenger = maybePassenger.get();
 
             // Actualizamos solo los campos que vienen en el DTO
-            if (dto.name() != null) passenger.setName(dto.name());
-            if (dto.surname() != null) passenger.setSurname(dto.surname());
             if (dto.email() != null) passenger.setEmail(dto.email());
             if (dto.phoneNumber() != null) passenger.setPhoneNumber(dto.phoneNumber());
-            if (dto.age() > 0) passenger.setAge(dto.age());
-            if (dto.passport() != null) passenger.setPassport(dto.passport());
 
             Passenger updatedPassenger = passengerRepository.update(passenger);
             return Optional.of(mapToDTO(updatedPassenger));
@@ -110,7 +106,6 @@ public class PassengerService implements PassengerMethod{
             return Optional.empty();
         }
     }
-
 
     // 2. Helper (Ayudante)
     // Un método privado para convertir la entidad (Passenger) al DTO (PassengerResponseDTO)

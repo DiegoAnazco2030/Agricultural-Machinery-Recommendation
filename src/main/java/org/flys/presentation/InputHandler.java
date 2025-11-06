@@ -40,21 +40,11 @@ public class InputHandler {
         System.out.println("Ingrese los detalles a modificar del pasajero:");
         MenuObjects.getString();
         String id = MenuObjects.getString("ID del pasajero a modificar:");
-        String name = MenuObjects.getString("Nuevo Nombre (deje en blanco para no cambiar):");
-        String surname = MenuObjects.getString("Nuevo Apellido (deje en blanco para no cambiar):");
         String email = MenuObjects.getString("Nuevo Email (deje en blanco para no cambiar):");
         String phone = MenuObjects.getString("Nuevo Teléfono (deje en blanco para no cambiar):");
-        String passport = MenuObjects.getString("Nuevo Pasaporte (deje en blanco para no cambiar):");
 
         // No pedimos edad para simplificar, pero se podría
-        return new PassengerUpdateDTO(id,
-                name.isBlank() ? null : name,
-                surname.isBlank() ? null : surname,
-                email.isBlank() ? null : email,
-                phone.isBlank() ? null : phone,
-                -1, // No actualizamos edad
-                passport.isBlank() ? null : passport
-        );
+        return new PassengerUpdateDTO(id, email, phone);
     }
 
     public static BookingCreateDTO getBookingCreateDTO() {
