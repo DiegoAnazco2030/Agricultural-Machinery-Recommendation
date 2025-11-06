@@ -70,6 +70,11 @@ public class FlysServices implements FlightMethod {
     }
 
     @Override
+    public List<Plane> listPlanes() {
+        return planeRepository.findAll();
+    }
+
+    @Override
     public Optional<FlyResponseDTO> updateFly(FlyUpdateDTO dto) {
         try {
             UUID uuid = UUID.fromString(dto.id());
@@ -95,12 +100,13 @@ public class FlysServices implements FlightMethod {
         }
     }
 
+
+
     @Override
     public boolean deleteFly(String id) {
         try {
             UUID uuid = UUID.fromString(id);
-            boolean existed = flightRepository.findById(uuid).isPresent();
-            if (existed) {
+            if (flightRepository.findById(uuid).isPresent()) {
                 flightRepository.deleteById(uuid);
                 return true;
             }

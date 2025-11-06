@@ -1,5 +1,6 @@
 package org.flys.services;
 
+import org.flys.business.fly.Plane;
 import org.flys.services.DTOs.FlyCreateDTO;
 import org.flys.services.DTOs.FlyUpdateDTO;
 import org.flys.services.DTOs.FlyResponseDTO;
@@ -14,6 +15,8 @@ public interface FlightMethod {
     Optional<FlyResponseDTO> getFly(String id);
 
     List<FlyResponseDTO> listFlys();
+
+    List<Plane> listPlanes();
 
     Optional<FlyResponseDTO> updateFly(FlyUpdateDTO dto);
 

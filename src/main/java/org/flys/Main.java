@@ -38,20 +38,25 @@ public class Main {
         PassengerController passengerController = new PassengerController();
         ReservationController reservationController = new ReservationController();
 
-
         // --- Datos de Prueba ---
         // Creamos un avión de prueba para que se puedan crear vuelos
         Plane plane1 = new Plane(AircraftModel.AIRBUS_A320, 180);
+        Plane plane2 = new Plane(AircraftModel.BOEING_787, 100);
+        Plane plane3 = new Plane(AircraftModel.AIRBUS_A350, 70);
+        Plane plane4 = new Plane(AircraftModel.BOEING_737, 160);
+
         planeRepo.save(plane1);
+        planeRepo.save(plane2);
+        planeRepo.save(plane3);
+        planeRepo.save(plane4);
         System.out.println("¡Bienvenido al Sistema de Vuelos!");
         System.out.println("Avión de prueba (Airbus A320) creado con ID: " + plane1.getId().toString());
 
 
         do {
             Menu.mainMenu();
-            int option = MenuObjects.getInt(1, 4);
 
-            switch (option) {
+            switch (MenuObjects.getInt(1, 4)) {
                 case 1:
                     // Ahora la lógica está encapsulada en el controlador
                     flightController.flightControllerInit(flysServices);
