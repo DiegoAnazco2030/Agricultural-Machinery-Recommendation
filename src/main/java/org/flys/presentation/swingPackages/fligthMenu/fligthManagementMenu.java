@@ -2,7 +2,7 @@ package org.flys.presentation.swingPackages.fligthMenu;
 
 import javax.swing.*;
 
-public class flightManagementMenu {
+public class fligthManagementMenu {
     private JPanel flightMenuPanel;
     private JButton registerNewFlightButton;
     private JButton modifyExistingFlightButton;
